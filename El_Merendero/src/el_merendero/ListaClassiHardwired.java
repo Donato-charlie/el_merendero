@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package listaclassihardwired;
+package el_merendero;
 
 import java.io.File;
 import java.util.Arrays;
@@ -43,8 +43,9 @@ public class ListaClassiHardwired {
      */
     private String[] ListaNomiClassi(){
        String s[] = new String [classiTotali];       
-       for(short i=0;i<classiTotali;i++)
-           s[i]= classi[i].getNomeClasse();
+       for(short i=0;i<classiTotali;i++) {
+            s[i]= classi[i].getNomeClasse();
+        }
        return s;
     }
     /**
@@ -53,7 +54,7 @@ public class ListaClassiHardwired {
      * @return Array contenente i nomi di tutti gli studenti del nome della classe passata come parametro
      */
     
-    public String[] ListaStudentiXClasse(String nomeclasse){
+    public String[] ListaStudentiXClasseData(String nomeclasse){
         for(short i = 0; i< classiTotali;i++){
             if(classi[i].getNomeClasse().toUpperCase().equals(nomeclasse.toUpperCase())){
                 return classi[i].getNomiStudenti();
@@ -92,26 +93,14 @@ public class ListaClassiHardwired {
     public short getClassiTotali() {
         return classiTotali;
     }
-
-    public void setClassiTotali(short classiTotali) {
-        this.classiTotali = classiTotali;
-    }
     
     
-    @Override
+  /*  @Override
     public String toString(){
         String s = "";
         for(short i=0;i<classiTotali;i++){
             s += classi[i].toString();
         }
         return s;
-    }
-    
-    
-    
-    public static void main(String[] args) {
-        String Studenti[];
-        ListaClassiHardwired listaClasse = new ListaClassiHardwired();
-        Studenti=listaClasse.ListaStudentiXClasse("5B-INFO");
-    }
+    }*/
 }

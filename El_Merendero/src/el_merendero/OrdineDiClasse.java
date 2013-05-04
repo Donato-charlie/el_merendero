@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Merendeproject;
+package el_merendero;
+
+import java.util.Calendar;
 
 /**
  *
@@ -10,6 +12,7 @@ package Merendeproject;
  */
 public class OrdineDiClasse {
 
+    private Calendar data;
     private String classe;
     private Ordine ordine;
     private OrdineDiClasse next;
@@ -76,6 +79,23 @@ public class OrdineDiClasse {
     public void setNext(OrdineDiClasse next) {
         this.next = next;
     }
+
+    /*
+     * Getter della data dell'ordine
+     * 
+     */
+    public Calendar getData() {
+        return data;
+    }
+    
+    /*
+     * Setter della data dell'ordine
+     * @param data
+     */
+    public void setData(Calendar data) {
+        this.data = data;
+    }
+    
 /**
      * Getter di default
      * 
@@ -97,10 +117,10 @@ public class OrdineDiClasse {
      */
     @Override
     public String toString() {
-        String s = "";
+        String s = data.get(Calendar.HOUR_OF_DAY) + ":" + data.get(Calendar.MINUTE) + " " + data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR)+"\n";
         OrdineDiClasse comodo = this.next;
         while (comodo != null) {
-            s += "Ordine: " + comodo.ordine + "\n";
+            s += " Ordine: " + comodo.ordine + "\n";
             comodo = comodo.next;
         }
         return s;

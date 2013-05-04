@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package listaclassihardwired;
+package el_merendero;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -111,7 +111,7 @@ public final class Classe {
      * @return la variabile 's' è una stringa che verrà riempita ogni volta con il nome della classe e successivamente
      * dai nomi degli studenti che la compongono.
      */
-    @Override
+    /*@Override
     public String toString() {
         String s = "";
         s = "\n"+nomeClasse+"\n\n";
@@ -121,5 +121,5 @@ public final class Classe {
         s +="-------------------------------------------------------------------------------------";
         return s;
         
-    }   
+    }   */
 }
