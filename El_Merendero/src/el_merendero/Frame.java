@@ -4,14 +4,13 @@
  */
 package el_merendero;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.*;
 
 /**
  *
@@ -44,6 +43,7 @@ public class Frame extends JFrame {
     private JButton ordineSingolo = new JButton("Ordine singolo");
     private JLabel lblStampa = new JLabel("Anteprima di stampa:");
     private JLabel lblStato;
+    private JComboBox combo;
 
     /**
      * Metodo Costruttore del form iniziale. 
@@ -54,18 +54,18 @@ public class Frame extends JFrame {
     public Frame() {
         super("El merendero");
         setLayout(new BorderLayout());
+        String[] testo = {"Ciao", "pùw", "agagga"};
+        combo = new JComboBox(testo);
         lblStato = new JLabel("Sposta il mouse su un componente per avere le sue caretteristiche");
         add(lblStato, BorderLayout.SOUTH);
         lblStato.setBorder(BorderFactory.createLineBorder(Color.black));
         Box horizontal = Box.createHorizontalBox();
         horizontal.add(Box.createHorizontalGlue());
         horizontal.add(ordineClasse);
-        BottoneListener bl=new BottoneListener();
-        ordineSingolo.addActionListener(bl);
-        add(ordineSingolo);
         horizontal.add(Box.createRigidArea(new Dimension(100, 8)));
         horizontal.add(ordineSingolo);
         horizontal.add(Box.createRigidArea(new Dimension(100, 8)));
+        horizontal.add(combo);
         ordine = new JPanel();
         anteStampa = new JPanel();
         ordine.add(horizontal);
@@ -86,7 +86,7 @@ public class Frame extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
+                        JOptionPane.showMessageDialog(Frame.this, "Creazione nuovo ordine", "Crea Nuovo Ordine", JOptionPane.INFORMATION_MESSAGE);
                     }
                 });
         menuFile.add(FileItemSave);
@@ -185,18 +185,6 @@ public class Frame extends JFrame {
  * Classe implementante l'interfaccia di ascolto dei comandi Mouse ;
  * 
  */
-    private class BottoneListener implements ActionListener{
-		@Override
-		//metodo obbligatorio che risponde all�evento
-		public void actionPerformed(ActionEvent arg0) {
-                    Frame.this.setVisible(false);
-                    FrameClasseStudente fb=new FrameClasseStudente();
-                    fb.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-                    fb.setSize( 275, 180 ); // set frame size
-                    fb.setLocationRelativeTo(null); //center fr
-                    fb.setVisible( true ); // display frame	
-		}
-	}
     private class HoverListener implements MouseListener {
 
         @Override

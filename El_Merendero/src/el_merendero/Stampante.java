@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package el_merendero;
 
 import java.awt.Font;
@@ -16,8 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  * @author Eddy, Manfredini, Bigliardi
- * @author Oukms, Brunelli, Tursi
- * @version 0.02
+ * @version 0.01
  */
 public class Stampante implements Printable {
 
@@ -32,7 +35,7 @@ public class Stampante implements Printable {
     private String classe;
     private String aula;
     private Calendar data;
-    private Ordine ordinepersonale;
+    private float soldiForniti;
 
     /**
      * Costruttore di default che istanzia le liste e carica il logo
@@ -43,12 +46,6 @@ public class Stampante implements Printable {
         prezzi = new LinkedList<Float>();
         image1 = new ImageIcon(this.getClass().getResource("Logo.jpg")).getImage();
     }
-    
-    public void setStampaOrdine(Ordine p){
-        
-        this.ordinepersonale=p;
-    }
-    
 
     /**
      * Metodo che genera il layout della pagina da stampare
@@ -62,22 +59,21 @@ public class Stampante implements Printable {
         if (page > 0) {
             return NO_SUCH_PAGE;
         }
-        
+
         g.drawImage(image1, 50, 20, null);
         image2 = new ImageIcon(this.getClass().getResource("Logo2.jpg")).getImage();
         g.drawImage(image2, 215, 20, null);
 
         FontMetrics fm = g.getFontMetrics();
         String appoggio;
-        appoggio = "Studente " + ordinepersonale.getNomeAcquirente();
-        g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 35);
         appoggio = "Classe " + classe;
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 50);
-        //appoggio = data.get(Calendar.HOUR_OF_DAY) + ":" + data.get(Calendar.MINUTE) + " " + data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
+        appoggio = data.get(Calendar.HOUR_OF_DAY) + ":" + data.get(Calendar.MINUTE) + " " + data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 65);
         appoggio = "Aula " + aula;
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 80);
 
+        float totale = 0;
         int i;
         for (i = 0; i < merende.size(); i++) {
             appoggio = prezzi.get(i) + " €";
@@ -88,14 +84,14 @@ public class Stampante implements Printable {
                 appoggio+=".";
             }
             g.drawString(appoggio, MARGINE, 120 + SPAZIATURA * i);
+            totale += prezzi.get(i);
         }
-        
         g.setFont(new Font("suns", Font.BOLD, 12));
-        appoggio = "Totale: " + ordinepersonale.getMerendeOrdinate().getTotale() + " €";
+        appoggio = "Totale: " + totale + " €";
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 120 + SPAZIATURA * i);
-        appoggio = "Soldi forniti: " + ordinepersonale.getSoldiForniti() + " €";
+        appoggio = "Soldi forniti: " + soldiForniti + " €";
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio) - 5, 140 + SPAZIATURA * i);
-        appoggio = "Resto: " + ordinepersonale.getResto() + " €";
+        appoggio = "Resto: " + (soldiForniti - totale) + " €";
         g.drawString(appoggio, MARGINE_DESTRO - fm.stringWidth(appoggio), 160 + SPAZIATURA * i);
 
         return PAGE_EXISTS;
@@ -140,37 +136,31 @@ public class Stampante implements Printable {
      * Metodo obbligatorio che aggiunge i soldi forniti all'ordine
      * @param soldiForniti valore float dei soldi forniti
      */
+    public void addSoldiForniti(float soldiForniti) {
+        this.soldiForniti = soldiForniti;
+    }
 
     void print() throws PrinterException {
         if (classe == null) {
-            JOptionPane.showMessageDialog(null, "Specificare una classe prima della stampa", "Classe", 2);
+            JOptionPane.showMessageDialog(null, "Speficiare una classe prima della stampa", "Classe", 2);
             return;
         }
         if (data == null) {
-            JOptionPane.showMessageDialog(null, "Specificare una data prima della stampa", "Data", 2);
+            JOptionPane.showMessageDialog(null, "Speficiare una data prima della stampa", "Data", 2);
             return;
         }
         if (aula == null) {
-            JOptionPane.showMessageDialog(null, "Specificare un'aula prima della stampa", "Aula", 2);
+            JOptionPane.showMessageDialog(null, "Speficiare un'aula prima della stampa", "Aula", 2);
             return;
         }
-        if (ordinepersonale.getSoldiForniti() == 0) {
-            JOptionPane.showMessageDialog(null, "Specificare i soldi forniti prima della stampa", "Soldi Forniti", 2);
+        if (soldiForniti == 0) {
+            JOptionPane.showMessageDialog(null, "Speficiare i soldi forniti prima della stampa", "Soldi Forniti", 2);
             return;
         }
         if (merende.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Specificare una merenda prima della stampa", "Merenda", 2);
+            JOptionPane.showMessageDialog(null, "Speficiare una merenda prima della stampa", "Merenda", 2);
             return;
         }
-        if(ordinepersonale.getNomeAcquirente()==null){
-            JOptionPane.showMessageDialog(null, "Specificare il nome acquirente", "Nome acquirente", 2);
-            return;           
-        }
-        if(ordinepersonale.getMerendeOrdinate()==null){
-            JOptionPane.showMessageDialog(null, "Specificare le merende ordinate", "merende ordinate", 2);
-            return;           
-        }  
-
         // Creates and returns a PrinterJob which is initially associated with the default printer.
         PrinterJob pj = PrinterJob.getPrinterJob();
         // Sets the name of the document to be printed.
@@ -185,6 +175,7 @@ public class Stampante implements Printable {
         classe = null;
         data = null;
         aula = null;
+        soldiForniti = 0;
         merende.clear();
         prezzi.clear();
     }
@@ -196,27 +187,15 @@ public class Stampante implements Printable {
      */
     public static void main(String[] args) throws PrinterException {
         Stampante st = new Stampante();
-        Ordine o=new Ordine("Tursi");
-        Listamerende l=new Listamerende();
-        Merenda m=new Merenda(0.5f,"pizza");
-        Merenda z=new Merenda(3f,"pizza");
-        l.add(m);
-        l.add(z);
         GregorianCalendar d = new GregorianCalendar(2013, 11, 22, 23, 12);
         st.addData(d);
         st.addClasse("4B Info");
         st.addAula("216");
+        st.addSoldiForniti(17.5f);
         st.add("Cotoletta",2, 5.80f);
         st.add("Hot-Dog",1, 1.20f);
         st.add("Forno",3, 3.00f);
         st.add("Piadina",4, 2.50f);
-        o.setSoldiForniti(4.2f);
-        o.setResto();
-        o.getResto();
-        o.setMerendeOrdinate(l);
-        st.setStampaOrdine(o);
         st.print();
-        // Crea im ordine personale
-        //Chioai
     }
 }

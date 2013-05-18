@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author b11g12
  */
-public class ListaMerendeAll extends Listamerende {
+public class ListaMerendeAll {
 
     private String prodotti[] /*= {"Bombolone", "Panino al salame"}*/;
     private float prezzi[] /*= {0.90f, 1.30f}*/;
@@ -25,8 +25,8 @@ public class ListaMerendeAll extends Listamerende {
         int j=0;
         int k=0;
         String s;
-        prodotti = new String[8];
-        prezzi = new float[8];
+        prodotti = new String[30];
+        prezzi = new float[30];
         BufferedReader reader = new BufferedReader(new FileReader("config\\merende\\".concat("merende.txt")));
         try {
             while ((s = reader.readLine()) != null) {
@@ -41,11 +41,6 @@ public class ListaMerendeAll extends Listamerende {
             }
         } catch (IOException ex) {
             Logger.getLogger(ListaMerendeAll.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Listamerende comodo = this;
-        for (i = 0; i < prodotti.length; i++) {
-            comodo = new Listamerende(new Merenda(prezzi[i], prodotti[i]));
-            comodo = comodo.getNext();
         }
     }
 
