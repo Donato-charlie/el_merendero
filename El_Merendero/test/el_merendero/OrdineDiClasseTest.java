@@ -57,7 +57,7 @@ public class OrdineDiClasseTest {
         o.add(m);
         odc.add(o);
         System.out.println(odc.toString());
-        String expected = "4B Info\nOrdine: Manfredini\n1x Panino 1 - 4.3€\n\nOrdine: Eddy\n1x Panino 2 - 5.6€\n\n";
+        String expected = "4B Info\nOrdine: Manfredini\n1x Panino 1 - 4.3€\n--------------------\nOrdine: Eddy\n1x Panino 2 - 5.6€\n--------------------\n";
         assertEquals("Test per l'ordine di classe", expected, odc.toString());
     }
 }

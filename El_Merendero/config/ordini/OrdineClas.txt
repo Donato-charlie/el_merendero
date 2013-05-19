@@ -1,0 +1,12 @@
+4B INFO
+Ordine: Simone
+1x panino - 2.0€
+4x cotoletta - 5.0€
+--------------------
+Ordine: Mattia
+3x pizza - 1.5€
+--------------------
+Ordine: Edoardo
+1x pizza - 1.5€
+--------------------
+

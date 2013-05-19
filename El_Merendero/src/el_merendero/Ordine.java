@@ -10,12 +10,12 @@ import java.util.LinkedList;
  *
  * @author b11g12
  */
-public class Ordine extends LinkedList<Merenda>{
+public class Ordine extends LinkedList<Merenda> {
 
     private String NomeAcquirente;
     private float SoldiForniti;
     private float resto;
-   
+
     public float getResto() {
         return resto;
     }
@@ -60,6 +60,11 @@ public class Ordine extends LinkedList<Merenda>{
             tot += m.getPrezzo();
         }
         return tot;
+    }
+
+    public boolean addMerenda(Merenda m) {
+        this.add(m);
+        return true;
     }
 
     @Override
